@@ -1,0 +1,46 @@
+{
+    "compilerOptions": {
+        "target": "es2019",
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "lib": [
+            "es2019"
+        ],
+        "sourceMap": true,              // Mapear quando tiver compilando
+        "outDir": "dist",               // Onde o build vai sair
+        "strict": true,                 // Sempre ter o strictMode
+        "noImplicitAny": true,          // Não deixa não inferir um tipo
+        "strictNullChecks": true,       // Não definir vars com null || undefined
+        "strictFunctionTypes": true,    // Não assumir automaticamente que terá um this
+        "noImplicitThis": true,         // Sem 'This' Implícito/escondido
+        "resolveJsonModule": true,      // Permite importar módulos com um uma extensão ‘.json’
+        "alwaysStrict": true,           // Garante que seus arquivos sejam analisados no modo estrito do ECMAScript e emitam “use strict”
+        "removeComments": true,         // Remover comentários 
+        "noImplicitReturns": true,      // verificará todos os caminhos de código em uma função para garantir que eles retornem um valor.
+        "esModuleInterop": true,        // Permite interoperabilidade de emição entre Módulos CommonJS e ES através da criação de namespaces para todas as importações.
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "paths": {
+            "@src/*": [
+                "./src/*"
+            ],
+            "@test/*": [
+                "./test/*"
+            ]
+        },
+        "rootDirs": [
+            "./src",
+            "./test"
+        ],
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./test/**/*.ts"
+    ],
+    "exclude": [
+        "./node_modules/*",
+        "dist"
+    ]
+}
