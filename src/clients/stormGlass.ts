@@ -4,8 +4,8 @@ import * as HTTPUtil from '@src/util/request'
 
 const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass');
 
-export interface StormGlassPointSource {
-    [Key: string]: number;
+export interface StormGlassForecastResponse {
+    hours: StormGlassPoint[];
 }
 
 export interface StormGlassPoint {
@@ -19,8 +19,8 @@ export interface StormGlassPoint {
     readonly windSpeed: StormGlassPointSource;    
 }
 
-export interface StormGlassForecastResponse {
-    hours: StormGlassPoint[];
+export interface StormGlassPointSource {
+    [Key: string]: number;
 }
 
 export interface ForecastPoint {
@@ -89,7 +89,8 @@ export class StormGlass {
                 waveHeight: point.waveHeight[this.stormGlassAPISource],
                 windDirection: point.windDirection[this.stormGlassAPISource],
                 windSpeed: point.windSpeed[this.stormGlassAPISource],
-            }));
+            })
+        );
     }
 
     private isValidPoint(point: Partial<StormGlassPoint>):boolean {
