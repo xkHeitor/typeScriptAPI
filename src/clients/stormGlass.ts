@@ -7,7 +7,7 @@ const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass')
 export interface StormGlassForecastResponse {
     hours: StormGlassPoint[];
 }
-
+ 
 export interface StormGlassPoint {
     readonly time: string;
     readonly windDirection: StormGlassPointSource;
@@ -28,7 +28,7 @@ export interface ForecastPoint {
     waveHeight: number;
     waveDirection: number;
     swellDirection: number;
-    swellHeight: number;
+    swellHeight: number;    
     swellPeriod: number;
     windDirection: number;
     windSpeed: number;
