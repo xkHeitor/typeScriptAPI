@@ -1,4 +1,4 @@
-import config, { IConfig } from 'config';
+import config, { IConfig } from "config";
 import mongoose, { Mongoose } from 'mongoose';
 
 const dbConfig: IConfig = config.get('App.database');
