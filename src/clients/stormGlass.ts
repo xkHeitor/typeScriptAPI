@@ -4,23 +4,12 @@ import * as HTTPUtil from '@src/util/request'
 
 const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass');
 
-export interface StormGlassForecastResponse {
-    hours: StormGlassPoint[];
-}
- 
-export interface StormGlassPoint {
-    readonly time: string;
-    readonly windDirection: StormGlassPointSource;
-    readonly waveHeight: StormGlassPointSource;
-    readonly waveDirection: StormGlassPointSource;
-    readonly swellDirection:StormGlassPointSource;
-    readonly swellHeight: StormGlassPointSource;
-    readonly swellPeriod: StormGlassPointSource;
-    readonly windSpeed: StormGlassPointSource;    
-}
-
 export interface StormGlassPointSource {
     [Key: string]: number;
+}
+
+export interface StormGlassForecastResponse {
+    hours: StormGlassPoint[];
 }
 
 export interface ForecastPoint {
@@ -32,6 +21,17 @@ export interface ForecastPoint {
     swellPeriod: number;
     windDirection: number;
     windSpeed: number;
+}
+ 
+export interface StormGlassPoint {
+    readonly time: string;
+    readonly windDirection: StormGlassPointSource;
+    readonly waveHeight: StormGlassPointSource;
+    readonly waveDirection: StormGlassPointSource;
+    readonly swellDirection:StormGlassPointSource;
+    readonly swellHeight: StormGlassPointSource;
+    readonly swellPeriod: StormGlassPointSource;
+    readonly windSpeed: StormGlassPointSource;    
 }
 
 export class ClientRequestError extends InternalError {
@@ -59,12 +59,8 @@ export class StormGlass {
     public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {
         try {
             const response = await this.request.get<StormGlassForecastResponse>(
-                `${stormGlassResourceConfig.get('apiUrl')}/weather/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&end=1592113802&lat=${lat}&lng=${lng}`,
-                {
-                    headers: {
-                        Authorization: stormGlassResourceConfig.get('apiToken')
-                    }
-                }
+               `${stormGlassResourceConfig.get('apiUrl')}/weather/point?lat=${lat}&lng=${lng}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`,
+                { headers: { Authorization: stormGlassResourceConfig.get('apiToken') } }
             );
 
             return this.normalizeResponse(response.data);
