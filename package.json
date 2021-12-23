@@ -9,7 +9,7 @@
     "dev": "ts-node-dev src/index.ts",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "yarn test:unit && yarn test:func",
     "test:func": "jest --projects ./test --runInBand",
     "test:unit": "jest"
   },
