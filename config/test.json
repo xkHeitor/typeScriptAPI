@@ -2,7 +2,7 @@
     "App": {
         "resources": {
             "StormGlass": {
-                "apiToken": "fe7f8676-48d0-11ec-8f3c-0242ac130002-fe7f870c-48d0-11ec-8f3c-0242ac130002"
+                "apiToken": "test-token"
             }
         }
     }
