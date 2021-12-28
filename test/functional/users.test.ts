@@ -7,11 +7,11 @@ describe('Users functional tests', () => {
 		await User.deleteMany({});
 	});
 
-	describe('When creating a new user', () => {
+	const newUserDefault = { 
+		name: 'John Doe', email: 'john@mail.com', password: '1234'
+	};
 
-		const newUserDefault = { 
-			name: 'John Doe', email: 'john@mail.com', password: '1234'
-		};
+	describe('When creating a new user', () => {
 
 		it ('Should successfully create a new user with encrypted password', async () => {
 			const response = await global.testRequest.post('/users').send(newUserDefault); 
@@ -42,4 +42,35 @@ describe('Users functional tests', () => {
 			});
 		});
 	});
+
+	describe('When authenticating a user', () => {
+
+		it ('Should generate a token for a valid user', async () => {
+			await new User(newUserDefault).save();
+			const response = await global.testRequest.post('/users/authenticate').send({
+				email: newUserDefault.email, password: newUserDefault.password
+			});
+
+			expect(response.body).toEqual(expect.objectContaining({ token: expect.any(String) }));
+		});
+
+		it ('Should return UNAUTHORIZED if the user with the given email is not found', async () => {
+			const response = await global.testRequest.post('/users/authenticate').send({
+				email: 'not-found@mail.com', password: newUserDefault.password
+			});
+
+			expect(response.status).toBe(401);
+		});
+
+		it ('Should return ANAUTHORIZED if the user is found but the password does not match', async () => {
+			await new User(newUserDefault).save();
+			const response = await global.testRequest.post('/users/authenticate').send({
+				email: newUserDefault.email, password: 'different password'
+			});
+
+			expect(response.status).toBe(401);
+		});
+
+	});
+
 });
