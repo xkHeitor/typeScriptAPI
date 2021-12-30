@@ -6,7 +6,7 @@
     },
     "auth": {
       "key": "some-key",
-      "tokenExpiresIn": "1000000"
+      "tokenExpiresIn": "10000000"
     },
     "resources": {
       "StormGlass": {
