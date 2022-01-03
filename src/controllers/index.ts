@@ -1,3 +1,4 @@
+import logger from "@src/logger";
 import { CUSTOM_VALIDATION } from "@src/models/user";
 import { Response } from "express";
 import mongoose from "mongoose";
@@ -7,7 +8,8 @@ export abstract class BaseController {
 		if (error instanceof mongoose.Error.ValidationError) {
 			const clientErrors = this.handleClientErrors(error);
 			res.status(clientErrors.code).send({ code: clientErrors.code, error: clientErrors.error });
-		}else {
+		} else {
+			logger.error(error);
 			res.status(500).send({ code: 500, error: 'Something went wrong' });
 		}
 	}
