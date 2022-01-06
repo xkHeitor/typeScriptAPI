@@ -29,7 +29,9 @@ describe('Users functional tests', () => {
 			const response = await global.testRequest.post('/users').send(newUser);
 			expect(response.status).toBe(422);
 			expect(response.body).toEqual({
-				code: 422, error: 'User validation failed: name: Path `name` is required.'
+				error: 'Unprocessable Entity',
+				code: 422, 
+				message: 'User validation failed: name: Path `name` is required.'
 			});
 		});
 
@@ -38,7 +40,9 @@ describe('Users functional tests', () => {
 			const response = await global.testRequest.post('/users').send(newUserDefault);
 			expect(response.status).toBe(409);
 			expect(response.body).toEqual({
-				code: 409, error: 'User validation failed: email: already exists in the database.'
+				error: 'Conflict',
+				code: 409, 
+				message: 'User validation failed: email: already exists in the database.'
 			});
 		});
 	});
