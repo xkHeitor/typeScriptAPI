@@ -2,6 +2,7 @@ import { ForecastPoint, StormGlass } from "@src/clients/stormGlass";
 import logger from "@src/logger";
 import { Beach } from "@src/models/beach";
 import { InternalError } from "@src/util/errors/internal-error";
+import { Rating } from "./rating";
 
 export interface TimeForecast {
     time: string;
@@ -18,7 +19,7 @@ export class ForecastProcessingInternalError extends InternalError {
 
 export class Forecast {
 
-    constructor(protected stormGlass = new StormGlass()) {}
+    constructor(protected stormGlass = new StormGlass(), protected RatingService: typeof Rating = Rating) {}
 
     /* eslint-disable @typescript-eslint/no-explicit-any */
     public async processForecastForBeaches(beaches: Beach[]): Promise<TimeForecast[]> {
@@ -26,8 +27,9 @@ export class Forecast {
         logger.info(`Preparing the forecast for ${beaches?.length} beaches`)
         try {
             for (const beach of beaches) { 
+                const rating = new this.RatingService(beach);
                 const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng);
-                const enrichedBeachData = this.enrichedBeachData(points, beach);
+                const enrichedBeachData = this.enrichedBeachData(points, beach, rating);
                 pointsWithCorrectSources.push(...enrichedBeachData);
             }
             return this.mapForecastByTime(pointsWithCorrectSources);
@@ -37,16 +39,16 @@ export class Forecast {
         }
     }
 
-    private enrichedBeachData (points: ForecastPoint[], beach: Beach): BeachForecast[] {
-        return points.map(e => ({
+    private enrichedBeachData (points: ForecastPoint[], beach: Beach, rating: Rating): BeachForecast[] {
+        return points.map(point => ({
             ... {},
             ... {
                 lat: beach.lat,
                 lng: beach.lng,
                 name: beach.name,
                 position: beach.position,
-                rating: 1
-            }, ... e
+                rating: rating.getRateForPoint(point),
+            }, ... point
         }));
     }
 
