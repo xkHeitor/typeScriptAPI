@@ -5,8 +5,6 @@ import { Server } from '@overnightjs/core';
 import { ForecastController } from './controllers/forecast';
 import { BeachesController } from './controllers/beaches';
 import { UsersController } from './controllers/users';
-import { OpenApiValidator } from 'express-openapi-validator';
-import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import * as database from '@src/database';
 import logger from './logger';
 import expressPino from 'express-pino-logger';
