@@ -1,5 +1,5 @@
 import { StormGlass } from '@src/clients/stormGlass';
-import { Beach, BeachPosition } from '@src/models/beach';
+import { Beach, GeoPosition } from '@src/models/beach';
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
 import { Forecast, ForecastProcessingInternalError } from '../forecast';
  
@@ -13,7 +13,7 @@ describe('Forecast Service', () => {
                 lat: -33.792726,
                 lng: 151.289824,
                 name: 'Manly',
-                position: BeachPosition.E,
+                position: GeoPosition.E,
                 user: 'fake-id',
             },
         ];
