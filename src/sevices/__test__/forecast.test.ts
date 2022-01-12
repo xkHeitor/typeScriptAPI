@@ -1,9 +1,9 @@
-import { StormGlass } from '@src/clients/stormGlass';
+import { StormGlass } from '@src/clients/stormGlass/stormGlass';
 import { Beach, GeoPosition } from '@src/models/beach';
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
 import { Forecast, ForecastProcessingInternalError } from '../forecast';
  
-jest.mock('@src/clients/stormGlass');
+jest.mock('@src/clients/stormGlass/stormGlass');
 
 describe('Forecast Service', () => {
 

@@ -1,4 +1,4 @@
-import { ForecastPoint } from "@src/clients/stormGlass";
+import { ForecastPoint } from "@src/clients/stormGlass/stormGlassTypes";
 import { Beach, GeoPosition } from "@src/models/beach";
 
 // meters

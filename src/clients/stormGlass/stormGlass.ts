@@ -1,58 +1,15 @@
-import { InternalError } from "@src/util/errors/internal-error";
 import config, { IConfig } from "config";
 import * as HTTPUtil from '@src/util/request'
 import { TimeUtil } from "@src/util/time";
+import { StormGlassResponseError, ClientRequestError } from "./stormGlassErrors"
+import { ForecastPoint, StormGlassForecastResponse, StormGlassPoint, StormGlassPointSource } from "./stormGlassTypes";
 
 const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass');
 
-export interface StormGlassPointSource {
-    [Key: string]: number;
-}
-
-export interface StormGlassForecastResponse {
-    hours: StormGlassPoint[];
-}
-
-export interface ForecastPoint {
-    time: string;
-    waveHeight: number;
-    waveDirection: number;
-    swellDirection: number;
-    swellHeight: number;    
-    swellPeriod: number;
-    windDirection: number;
-    windSpeed: number;
-}
- 
-export interface StormGlassPoint {
-    readonly time: string;
-    readonly windDirection: StormGlassPointSource;
-    readonly waveHeight: StormGlassPointSource;
-    readonly waveDirection: StormGlassPointSource;
-    readonly swellDirection:StormGlassPointSource;
-    readonly swellHeight: StormGlassPointSource;
-    readonly swellPeriod: StormGlassPointSource;
-    readonly windSpeed: StormGlassPointSource;    
-}
-
-export class ClientRequestError extends InternalError {
-    constructor(message: string){
-        const internalMessage = '`Unexpected error when trying to communicate to StormGlass';
-        super(`${internalMessage}: ${message}`);    
-    }
-} 
-
-export class StormGlassResponseError extends InternalError {
-    constructor(message: string) {
-        const internalMessage = 'Unexpected error returned by the StormGlass service';
-        super(`${internalMessage}: ${message}`);   
-    }
-}
-
 export class StormGlass {
  
-    readonly stormGlassAPIParams    = 'swellDirection,swellHeight,swellPeriod,waveDirection,waveHeight,windDirection,windSpeed';
     readonly stormGlassAPISource    = 'noaa';
+    readonly stormGlassAPIParams    = 'swellDirection,swellHeight,swellPeriod,waveDirection,waveHeight,windDirection,windSpeed';
 
     constructor(protected request = new HTTPUtil.Request()) {}
 

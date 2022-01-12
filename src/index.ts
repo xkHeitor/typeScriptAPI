@@ -1,7 +1,6 @@
 import { SetupServer } from "./server";
 import config from "config";
 import logger from "./logger";
-import { sign } from "crypto";
 
 enum ExitStatus {
 	Failure = 1,

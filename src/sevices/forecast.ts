@@ -1,6 +1,7 @@
 import _  from 'lodash';
-import { ForecastPoint, StormGlass } from "@src/clients/stormGlass";
 import logger from "@src/logger";
+import { StormGlass } from "@src/clients/stormGlass/stormGlass";
+import { ForecastPoint } from "@src/clients/stormGlass/stormGlassTypes";
 import { Beach } from "@src/models/beach";
 import { InternalError } from "@src/util/errors/internal-error";
 import { Rating } from "./rating";
